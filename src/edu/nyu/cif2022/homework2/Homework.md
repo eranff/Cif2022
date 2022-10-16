@@ -25,5 +25,5 @@ Question #2
 ^^^^^^^^^^^
 
 Repeat Question #1 but now use a Runnable instead of a supplier to achieve the same goal and out put. 
-In addition, you will use a lambda as a veriable rather than inline it.
+In addition, you will use a lambda as a variable rather than inline it.
 A scaffold is provided.
