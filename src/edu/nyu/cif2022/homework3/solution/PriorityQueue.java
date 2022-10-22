@@ -1,4 +1,4 @@
-package edu.nyu.cif2022.homework3;
+package edu.nyu.cif2022.homework3.solution;
 
 /**
  * A queue of elements.

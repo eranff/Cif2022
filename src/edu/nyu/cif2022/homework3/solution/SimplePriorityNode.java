@@ -1,8 +1,7 @@
-package edu.nyu.cif2022.homework3;
+package edu.nyu.cif2022.homework3.solution;
 
 /**
- * A node for a list list.
- * A node contains an object of some type <E> and to the previous and next nodes.
+ * An implementation of {@code PriorityNode<E>}
  * 
  * @param <E> the element's type
  */
@@ -73,6 +72,12 @@ public class SimplePriorityNode<E extends Comparable<E>> implements PriorityNode
 	 */
 	public PriorityNode<E> previous() {
 		return previous;
+	}
+	
+	public void reset() {
+		element = null;
+		next = null;
+		previous = null;
 	}
 	
 	/**

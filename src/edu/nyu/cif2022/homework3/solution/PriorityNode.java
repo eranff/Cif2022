@@ -1,4 +1,4 @@
-package edu.nyu.cif2022.homework3;
+package edu.nyu.cif2022.homework3.solution;
 
 /**
  * A node for a list list containing elements that could be compared with each other.
@@ -48,4 +48,9 @@ public interface PriorityNode<E extends Comparable<E>> {
 	 * @return the previous node in the list
 	 */
 	PriorityNode<E> previous();
+	
+	/**
+	 * Resets the node to its original condition.
+	 */
+	void reset();
 }
