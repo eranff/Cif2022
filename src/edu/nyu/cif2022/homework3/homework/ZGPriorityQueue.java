@@ -12,7 +12,6 @@ public class ZGPriorityQueue<E extends Comparable<E>> {
 	private PriorityNode<E> emptyHead;
 	
 	public ZGPriorityQueue() {
-		
 	}
 	
 	public void add(E element) {
@@ -21,14 +20,27 @@ public class ZGPriorityQueue<E extends Comparable<E>> {
 		}
 		var node = emptyHead;
 		emptyHead = node.next();
-		emptyHead.previous(null);	
 	}
 	
 	public E remove() {
-		return null;
+		if (head == null) {
+			return null;
+		} else {
+			var tmp = head;
+			E element = head.element();
+			head = tmp.next();
+			tmp.next(emptyHead);
+			emptyHead = tmp;
+			return element;
+		}
+		
 	}
 	
 	public E peek() {
-		return null;
+		if (head == null) {
+			return null;
+		} else {
+			return head.element();
+		}
 	}
 }

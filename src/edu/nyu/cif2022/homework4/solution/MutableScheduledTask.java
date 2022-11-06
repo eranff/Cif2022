@@ -1,15 +1,18 @@
-package edu.nyu.cif2022.homework4;
+package edu.nyu.cif2022.homework4.solution;
 
 /**
  * A reusable {@code ScheduledTask} that can be compared to other 
  * {@code ScheduledTask} based on execution time, and its also an 
- * {@code Async} with respect to the wrapped task. 
+ * {@code Async} which represents to the wrapped task. 
  */
 public class MutableScheduledTask implements 
 		ScheduledTask, Comparable<ScheduledTask>, Async {
 	
 	private boolean cancelled;
 	private boolean done;
+	private boolean repeatable;
+	
+	private long delta;
 	
 	private long executionTime;
 	private Runnable task;
@@ -28,13 +31,40 @@ public class MutableScheduledTask implements
 	 */
 	void wrap(long executionTime, Runnable task) {
 		this.executionTime = executionTime;
+		this.task = task;
 		done = false;
 		cancelled = false;
+		repeatable = false;
+		delta = -1;
 	}
+	
+	/**
+	 * Wraps an execution time and a task.
+	 * 
+	 * @param executionTime the execution time for the task
+	 * @param task the task to execute at the specified {@code executionTime}
+	 * @param repeateble true if the task is repeatable
+	 * @param delta milliseconds between consecutive execution of the this task
+	 */
+	void wrap(long executionTime, Runnable task, boolean repeatable, long delta) {
+		this.executionTime = executionTime;
+		this.task = task;
+		this.repeatable = repeatable;
+		this.delta = delta;
+		done = false;
+		cancelled = false;
+		repeatable = false;
+	}
+
 
 	@Override
 	public void run() {
-		// implement
+		if (!cancelled && !done) {
+			this.task.run();
+		}
+		if (!repeatable) {
+			done = true;
+		}
 	}
 
 	@Override
@@ -53,6 +83,11 @@ public class MutableScheduledTask implements
 	public long executionTime() {
 		return executionTime;
 	}
+	
+	@Override
+	public long delta() {
+		return delta;
+	}
 
 	@Override
 	public void cancel() {
@@ -61,6 +96,16 @@ public class MutableScheduledTask implements
 
 	@Override
 	public boolean isDone() {
-		return done;
+		return done || cancelled;
+	}
+	
+	@Override
+	public boolean isRepeatable() {
+		return repeatable;
+	}
+	
+	@Override
+	public void executionTime(long executionTime) {
+		this.executionTime = executionTime;
 	}
 }

@@ -1,6 +1,6 @@
-package edu.nyu.cif2022.homework4;
+package edu.nyu.cif2022.homework4.solution;
 
-import edu.nyu.cif2022.homework3.homework.ZGPriorityQueue;
+import edu.nyu.cif2022.homework3.solution.ZGPriorityQueue;
 
 public class PriorityQueueBasedScheduler implements Scheduler {
 	
@@ -29,8 +29,10 @@ public class PriorityQueueBasedScheduler implements Scheduler {
 
 	@Override
 	public Async scheduleEvery(long delta, Runnable task) {
-		//implement
-		return null;
+		var scheduledTask = new MutableScheduledTask();
+		scheduledTask.wrap(time,  task,  true,  delta);
+		tasks.add(scheduledTask);
+		return scheduledTask;
 	}
 	
 	/**
@@ -40,5 +42,14 @@ public class PriorityQueueBasedScheduler implements Scheduler {
 	 * @param time the time for earlier tasks to be executed.
 	 */
 	public void setTimeAndExecute(long time) {
+		this.time = time;
+		while (tasks.peek() != null && tasks.peek().executionTime() <= time) {
+			var task = tasks.remove();
+			task.run();
+			if (task.isRepeatable()) {
+				task.executionTime(time + task.delta());
+				tasks.add(task);
+			}
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package edu.nyu.cif2022.homework4;
+package edu.nyu.cif2022.homework4.solution;
 
 /**
  * A representation of an asynchronous task.
