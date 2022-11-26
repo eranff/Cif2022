@@ -187,7 +187,7 @@ public class PriorityQueueBasedSchedulerTest {
 	}
 
 	@Test
-	void tasks_are_executed_by_order() {
+	void tasks_are_executed_by_order1() {
 		// for
 		scheduler.scheduleAt(11, task1);
 		scheduler.scheduleAt(12, task2);
@@ -204,7 +204,7 @@ public class PriorityQueueBasedSchedulerTest {
 	}
 	
 	@Test
-	void tasks_are_executed_by_order_with_every_task() {
+	void tasks_are_executed_by_order() {
 		// for
 		scheduler.setTimeAndExecute(5);
 		scheduler.scheduleAt(11, task1);
