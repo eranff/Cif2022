@@ -15,15 +15,18 @@ public class Example14 {
 	public static void main (String...args) {
 		// creating the executor service
 		var executorService = Executors.newFixedThreadPool(3);
+		var futures = new CompletableFuture[1000];
 		for (int i = 0; i < 1000; ++i) {
 			// Creating the task
 			var task = new SomeCalculation();
 			// Submitting the task
 			var future = CompletableFuture.supplyAsync(task, executorService);
+			futures[i] = future;
 			// Subscribing a callback when the task is completed.
 			future.thenAccept((result) -> System.out.println(result));
+			
 		}
-		executorService.shutdown();
+		CompletableFuture.allOf(futures).thenRun(() -> executorService.shutdown());
 	}
 	
 	/**
